@@ -16,7 +16,7 @@ def sample(inDir,outDir):
 		os.makedirs(out_dir)
 		files=os.listdir(in_dir)
 		for file_name in files[:100]:
-			in_file=os.path.join(t_dir,file_name)
+			in_file=os.path.join(in_dir,file_name)
 			out_file=os.path.join(out_dir,file_name)
 			shutil.copyfile(in_file,out_file)
 

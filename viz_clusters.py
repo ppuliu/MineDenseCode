@@ -60,12 +60,12 @@ def viz_nets(inDir):
 	adjmatrix=[]
 	
 	files=os.listdir(inDir)
-	fileNum=len(files)
-	m=np.zeros(shape=(N,N))
 	readNetN=0		
 	for file_name in files:
 		if not file_name.endswith('.cnet'):
 			continue
+		names.append(file_name)
+		m=np.zeros(shape=(N,N))
 		readNetN+=1
 		filepath=os.path.join(inDir,file_name)
 		with open(filepath) as f:
@@ -75,14 +75,15 @@ def viz_nets(inDir):
 				t=line.split('\t')
 				r=int(t[0])-1
 				c=int(t[1])-1
-				m[r,c]+=1.0/fileNum
-	adjmatrix.append(m)
+				m[r,c]+=1
+		adjmatrix.append(m)
 	print str(readNetN)+' networks read'
 
 
 	# visualization section
 	figN=int(math.ceil(math.sqrt(len(names))))
-	fig, axes = plt.subplots(figN, figN, figsize=(12, 6),
+	print figN
+	fig, axes = plt.subplots(figN, figN, figsize=(figN, figN),
                          subplot_kw={'xticks': [], 'yticks': []})
 	fig.subplots_adjust(hspace=0.3, wspace=0.05)
 
@@ -97,5 +98,5 @@ def viz_nets(inDir):
 
 if __name__=='__main__':
 	inDir=sys.argv[1]
-	viz_clusters(inDir)
+	#viz_clusters(inDir)
 	viz_nets(inDir)

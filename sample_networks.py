@@ -14,11 +14,14 @@ def sample(inDir,outDir):
 		in_dir=os.path.join(inDir,d)
 		out_dir=os.path.join(outDir,d)
 		os.makedirs(out_dir)
-		files=os.listdir(in_dir)
-		for file_name in files[:100]:
-			in_file=os.path.join(in_dir,file_name)
-			out_file=os.path.join(out_dir,file_name)
-			shutil.copyfile(in_file,out_file)
+		netidFile=os.path.join(out_dir,'network_ids.txt')
+		with open(netidFile,'w') as f:
+			files=os.listdir(in_dir)
+			for file_name in files[:100]:
+				in_file=os.path.join(in_dir,file_name)
+				out_file=os.path.join(out_dir,file_name)
+				shutil.copyfile(in_file,out_file)
+				f.write(file_name.split('.')[0]+'\n')
 
 if __name__=='__main__':
 	

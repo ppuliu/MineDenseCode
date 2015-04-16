@@ -18,11 +18,12 @@ def readGraph(file_name):
 			g.add_edge(int(t[0]),int(t[1]))
 	return g
 
-def getClusterCoefficient(files):
+def getClusterCoefficient(inputDir):
+	files=os.listdir(inputDir)
 	nsamples=len(files)
 	coff=np.zeros(shape=(NNODE,nsamples))
 	for i in range(nsamples):
-		G=readGraph(os.path.join(path,files[i]))
+		G=readGraph(os.path.join(inputDir,files[i]))
 		clusterings=nx.clustering(G)
 		for k,v in clusterings.items():
 			coff[k-1][i]=v	# store the clustering coefficient v for node k, file i

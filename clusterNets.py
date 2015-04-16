@@ -8,7 +8,7 @@ import timeit
 
 NNODE=428
 NCLUSTER=500
-ITER=-1800
+ITER=-10
 
 def readGraph(file_name):
 	g=nx.Graph()
@@ -27,14 +27,18 @@ def getClusterCoefficient(files):
 		for k,v in clusterings.items():
 			coff[k-1][i]=v	# store the clustering coefficient v for node k, file i
 		print '---{0}---'.format(i)
+	mean=np.mean(coff,axis=1)
+	mean=mean.reshape(NNODE,1)
+	one=np.ones(1,nsamples)
+	coff=coff-np.dot(mean,one)
 	return coff
 
 def sparseCoding(X):
     X = np.asfortranarray(X)
     param = { 'K' : NCLUSTER,	# size of the dictionary 
-          'lambda1' : 0.15, 
-          'posD' : True,	# dictionary positive constrain
-          'modeD' : 1,	# L1 regulization regularization on D
+          #'lambda1' : 0.15, 
+          #'posD' : True,	# dictionary positive constrain
+          #'modeD' : 1,	# L1 regulization regularization on D
           'iter' : ITER} # runtime limit 15mins
     
     D = spams.trainDL_Memory(X,**param)
@@ -52,14 +56,14 @@ def _extract_lasso_param(f_param):
             l_param[x] = f_param[x]
     return l_param
 
-def groupNets(alpha,files):
+def groupNets(alpha):
 	res=[]
 	nclusters,nsamples=alpha.shape
 	for i in range(nclusters):
 		t=[]
 		for j in range(nsamples):
 			if alpha[i,j]>0:
-				t.append(files[j])
+				t.append(j)
 		res.append(t)
 	return res
 
@@ -100,7 +104,7 @@ def getClusters(inputDir,outputDir):
 	np.savetxt(codeFile,alpha.toarray())
 
 	print 'grouping networks...'
-	groups=groupNets(alpha,files)
+	groups=groupNets(alpha)
 	clusterFile=os.path.join(outputDir,'clusters.txt')
 	with open(clusterFile,'w') as f:
 		for nets in groups:

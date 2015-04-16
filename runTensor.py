@@ -90,7 +90,7 @@ def runTensor(outDir,geneN):
 			command+=['--selectedDatasetsListFile='+netidFile]	
 			command+=['--minGene='+'4']
 			command+=['--maxGene='+'30']
-			command+=['--minNet='+'100']
+			command+=['--minNet='+'50']
 			command+=['--minDensity='+'0.8']
 			command+=['--networksPath='+currPar]
 			resDir=os.path.join(tDir,sfile)

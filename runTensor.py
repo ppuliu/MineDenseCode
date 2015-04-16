@@ -4,10 +4,54 @@ import shutil
 import subprocess
 import time
 
+# def moveFiles(dataDir,outDir):
+# 	dic={}
+# 	clusterFile=os.path.join(outDir,'clusters.txt')
+
+# 	with open(clusterFile) as f:
+# 		i=0
+# 		for line in f:
+# 			i+=1
+# 			if line.strip()=='':
+# 				continue
+# 			else:
+# 				clusterDir=os.path.join(outDir,'clusters',str(i))
+# 				os.makedirs(clusterDir)
+
+# 				netidFile=os.path.join(clusterDir,'network_ids.txt')
+# 				with open(netidFile,'w') as f:
+# 					for s in line.split():
+# 						file_name=s
+# 						sourceFile=os.path.join(dataDir,file_name)
+# 						targetFile=os.path.join(clusterDir,file_name)
+# 						shutil.copyfile(sourceFile,targetFile)
+
+# 						if file_name not in dic:
+# 							dic[file_name]=1
+# 						f.write(file_name.split('.')[0]+'\n')
+
+# 	files=os.listdir(dataDir)			
+# 	clusterDir=os.path.join(outDir,'clusters','0')
+# 	os.makedirs(clusterDir)
+
+# 	netidFile=os.path.join(clusterDir,'network_ids.txt')
+# 	with open(netidFile,'w') as f:
+# 		for file_name in files:
+# 			if file_name not in dic:
+# 				sourceFile=os.path.join(dataDir,file_name)
+# 				targetFile=os.path.join(clusterDir,file_name)
+# 				shutil.copyfile(sourceFile,targetFile)
+
+# 				f.write(file_name.split('.')[0]+'\n')
+
 def moveFiles(dataDir,outDir):
 	dic={}
 	clusterFile=os.path.join(outDir,'clusters.txt')
-
+	indexFile=os.path.join(outDir,'codeIndex.txt')
+	indices=[]
+	with open(indexFile) as f:
+		s=f.readline()
+		indices=s.split()
 	with open(clusterFile) as f:
 		i=0
 		for line in f:
@@ -17,18 +61,19 @@ def moveFiles(dataDir,outDir):
 			else:
 				clusterDir=os.path.join(outDir,'clusters',str(i))
 				os.makedirs(clusterDir)
-
 				netidFile=os.path.join(clusterDir,'network_ids.txt')
-				with open(netidFile,'w') as f:
+				with open(netidFile,'w') as f_netid:
+
 					for s in line.split():
-						file_name=s
+						k=int(s)-1
+						file_name=indices[k]
 						sourceFile=os.path.join(dataDir,file_name)
 						targetFile=os.path.join(clusterDir,file_name)
 						shutil.copyfile(sourceFile,targetFile)
 
 						if file_name not in dic:
 							dic[file_name]=1
-						f.write(file_name.split('.')[0]+'\n')
+						f_netid.write(file_name.split('.')[0]+'\n')
 
 	files=os.listdir(dataDir)			
 	clusterDir=os.path.join(outDir,'clusters','0')
@@ -39,9 +84,8 @@ def moveFiles(dataDir,outDir):
 		for file_name in files:
 			if file_name not in dic:
 				sourceFile=os.path.join(dataDir,file_name)
-				targetFile=os.path.join(clusterDir,file_name)
+				targetFile=os.path.join(clusterDir,'clusters',file_name)
 				shutil.copyfile(sourceFile,targetFile)
-
 				f.write(file_name.split('.')[0]+'\n')
 
 def runTensor(outDir,geneN):

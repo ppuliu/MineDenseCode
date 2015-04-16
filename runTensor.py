@@ -2,6 +2,7 @@ import sys
 import os
 import shutil
 import subprocess
+import timeit
 
 def moveFiles(dataDir,outDir):
 	dic={}
@@ -47,6 +48,8 @@ def runTensor(outDir,geneN):
 	'''
 	run multiple tensor instances for each partition
 	'''
+	start=timeit.default_timer()
+
 	print '---------------------------'
 	tDir=os.path.join(outDir,'tensor')
 	if os.path.isdir(tDir):
@@ -114,6 +117,8 @@ def runTensor(outDir,geneN):
 					print 'tensor run into error: '+str(-returncode)
 					sys.exit(-1)
 		print '...done'
+		end=timeit.default_timer()
+		print 'total time elapsed: {0} seconds'.format(end-start)
 
 if __name__=='__main__':
 	

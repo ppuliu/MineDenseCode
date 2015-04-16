@@ -131,10 +131,13 @@ def runTensor(outDir,geneN):
 			command+=['--geneTotalNumber='+geneN]
 			currPar=os.path.join(outDir,'clusters',sfile)
 			netidFile=os.path.join(currPar,'network_ids.txt')
+			minNet=len(os.listdir(currPar))/2
+			if(minNet==0):
+				minNet=1
 			command+=['--selectedDatasetsListFile='+netidFile]	
 			command+=['--minGene='+'4']
 			command+=['--maxGene='+'30']
-			command+=['--minNet='+'50']
+			command+=['--minNet='+str(minNet)]
 			command+=['--minDensity='+'0.8']
 			command+=['--networksPath='+currPar]
 			resDir=os.path.join(tDir,sfile)

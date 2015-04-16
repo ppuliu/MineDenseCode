@@ -8,7 +8,7 @@ import timeit
 
 NNODE=428
 NCLUSTER=500
-ITER=-10
+ITER=-7200
 
 def readGraph(file_name):
 	g=nx.Graph()
@@ -28,16 +28,18 @@ def getClusterCoefficient(inputDir):
 		for k,v in clusterings.items():
 			coff[k-1][i]=v	# store the clustering coefficient v for node k, file i
 		print '---{0}---'.format(i)
+	print coff
 	mean=np.mean(coff,axis=1)
-	mean=mean.reshape(NNODE,1)
-	one=np.ones(1,nsamples)
+	print mean
+	mean=mean.reshape((NNODE,1))
+	one=np.ones((1,nsamples))
 	coff=coff-np.dot(mean,one)
 	return coff
 
 def sparseCoding(X):
     X = np.asfortranarray(X)
     param = { 'K' : NCLUSTER,	# size of the dictionary 
-          #'lambda1' : 0.15, 
+          'lambda1' : 0.15, 
           #'posD' : True,	# dictionary positive constrain
           #'modeD' : 1,	# L1 regulization regularization on D
           'iter' : ITER} # runtime limit 15mins

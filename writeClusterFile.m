@@ -5,7 +5,7 @@ fileID = fopen(file_name,'w');
 for i=1:clusterN
     t=find(cidx==i);
     for j=1:length(t)
-        fprintf(fileID,'%d\t',t(j)-1);
+        fprintf(fileID,'%d ',t(j)-1);
     end
     fprintf(fileID,'\n');
 end

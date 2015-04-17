@@ -56,7 +56,7 @@ if __name__=='__main__':
 	
 	inDir=sys.argv[1]
 	outDir=sys.argv[2]
-	#sample(inDir,outDir)
-	random_sample(inDir,outDir,500,100)
+	sample(inDir,outDir)
+	#random_sample(inDir,outDir,500,100)
 
 

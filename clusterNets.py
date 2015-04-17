@@ -72,42 +72,42 @@ def groupNets(alpha):
 
 def getClusters(inputDir,outputDir):
 	
-	# if os.path.isdir(outputDir):
-	# 	shutil.rmtree(outputDir)
-	# print "creating "+outputDir
-	# os.makedirs(outputDir)
+	if os.path.isdir(outputDir):
+		shutil.rmtree(outputDir)
+	print "creating "+outputDir
+	os.makedirs(outputDir)
 
-	# files=os.listdir(inputDir)
-	# codeIndexFile=os.path.join(outputDir,'codeIndex.txt')
-	# with open(codeIndexFile,'w') as f:
-	# 	f.write(' '.join(files))
+	files=os.listdir(inputDir)
+	codeIndexFile=os.path.join(outputDir,'codeIndex.txt')
+	with open(codeIndexFile,'w') as f:
+		f.write(' '.join(files))
 
-	# print 'calculating clustering coefficients...'
-	# start=timeit.default_timer()
-	# X=getClusterCoefficient(inputDir)
-	# end=timeit.default_timer()
-	# print 'time: {0} seconds'.format(end-start)
+	print 'calculating clustering coefficients...'
+	start=timeit.default_timer()
+	X=getClusterCoefficient(inputDir)
+	end=timeit.default_timer()
+	print 'time: {0} seconds'.format(end-start)
 	
 		
-	# print 'saving clustering coefficients...'
-	# clusCoeffFile=os.path.join(outputDir,'clusCoeff.txt')
-	# np.savetxt(clusCoeffFile,X)
+	print 'saving clustering coefficients...'
+	clusCoeffFile=os.path.join(outputDir,'clusCoeff.txt')
+	np.savetxt(clusCoeffFile,X)
 
-	# print 'doing sparse coding...'
-	# start=timeit.default_timer()
-	# D,alpha=sparseCoding(X)
-	# end=timeit.default_timer()
-	# print 'time: {0} seconds'.format(end-start)
+	print 'doing sparse coding...'
+	start=timeit.default_timer()
+	D,alpha=sparseCoding(X)
+	end=timeit.default_timer()
+	print 'time: {0} seconds'.format(end-start)
 
-	# print 'saving dictionary...'
-	# dicFile=os.path.join(outputDir,'dic.txt')
-	# np.savetxt(dicFile,D)
-	# print 'saving codings...'
-	# codeFile=os.path.join(outputDir,'code.txt')
-	# np.savetxt(codeFile,alpha.toarray())
-
+	print 'saving dictionary...'
+	dicFile=os.path.join(outputDir,'dic.txt')
+	np.savetxt(dicFile,D)
+	print 'saving codings...'
 	codeFile=os.path.join(outputDir,'code.txt')
-	alpha=np.loadtxt(codeFile)
+	np.savetxt(codeFile,alpha.toarray())
+
+	# codeFile=os.path.join(outputDir,'code.txt')
+	# alpha=np.loadtxt(codeFile)
 	print 'grouping networks...'
 	groups=groupNets(alpha)
 	clusterFile=os.path.join(outputDir,'clusters.txt')

@@ -20,7 +20,7 @@ def readPatterns(files):
 				if len(line.strip())==0:
 					continue
 				t=line.split(']')
-				t=t[1:].split(',')
+				t=t[0][1:].split(',')
 				currNodes=Set()
 				for node in t:
 					currNodes.add(int(node))
@@ -95,7 +95,9 @@ if __name__=='__main__':
 		inDir=sys.argv[2]
 
 		files=getPatternList(inDir)
+		#print len(files),' files read'
 		patterns=readPatterns(files)
+		#print len(patterns),' patterns read'
 		mergePatterns(patterns)
 	
 	if param=='-compare':

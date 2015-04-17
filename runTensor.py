@@ -46,8 +46,8 @@ import time
 
 def moveFiles(dataDir,outDir):
 	dic={}
-	clusterFile=os.path.join(outDir,'clusters.txt')
-	indexFile=os.path.join(outDir,'codeIndex.txt')
+	clusterFile=os.path.join(outDir,'clusters.txt') # start from 0
+	indexFile=os.path.join(outDir,'codeIndex.txt')	
 	indices=[]
 	with open(indexFile) as f:
 		s=f.readline()
@@ -65,7 +65,7 @@ def moveFiles(dataDir,outDir):
 				with open(netidFile,'w') as f_netid:
 
 					for s in line.split():
-						k=int(s)-1
+						k=int(s)
 						file_name=indices[k]
 						sourceFile=os.path.join(dataDir,file_name)
 						targetFile=os.path.join(clusterDir,file_name)
@@ -84,7 +84,7 @@ def moveFiles(dataDir,outDir):
 		for file_name in files:
 			if file_name not in dic:
 				sourceFile=os.path.join(dataDir,file_name)
-				targetFile=os.path.join(clusterDir,'clusters',file_name)
+				targetFile=os.path.join(clusterDir,file_name)
 				shutil.copyfile(sourceFile,targetFile)
 				f.write(file_name.split('.')[0]+'\n')
 

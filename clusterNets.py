@@ -28,9 +28,7 @@ def getClusterCoefficient(inputDir):
 		for k,v in clusterings.items():
 			coff[k-1][i]=v	# store the clustering coefficient v for node k, file i
 		print '---{0}---'.format(i)
-	print coff
 	mean=np.mean(coff,axis=1)
-	print mean
 	mean=mean.reshape((NNODE,1))
 	one=np.ones((1,nsamples))
 	coff=coff-np.dot(mean,one)
@@ -66,7 +64,7 @@ def groupNets(alpha):
 		t=[]
 		for j in range(nsamples):
 			if alpha[i,j]>0:
-				t.append(j)
+				t.append(j)		# starting from 0
 		res.append(t)
 	return res
 

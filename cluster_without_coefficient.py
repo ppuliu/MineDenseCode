@@ -44,6 +44,22 @@ def sparseCoding(X):
     # alpha = spams.lasso(X,D = D,**lparam)
     return D
 
+def generateCode(X,D):
+	X = np.asfortranarray(X)
+	print X.shape
+	D = np.asfortranarray(D)
+	print D.shape
+    param = { 'K' : NCLUSTER,	# size of the dictionary 
+          'lambda1' : 0.15, 
+          #'posD' : True,	# dictionary positive constrain
+          #'modeD' : 1,	# L1 regulization regularization on D
+          'iter' : ITER} # runtime limit 15mins
+
+    lparam = _extract_lasso_param(param)
+    print 'genrating codes...'
+    alpha = spams.lasso(X,D = D,**lparam)
+    return alpha
+
 
 def _extract_lasso_param(f_param):
     lst = [ 'L','lambda1','lambda2','mode','pos','ols','numThreads','length_path','verbose','cholesky']
@@ -143,10 +159,20 @@ def getDictionary(inputDir,outputDir):
 	dicFile=os.path.join(outputDir,'dic.txt')
 	np.savetxt(dicFile,D)
 
+def getAlpha(outputDir):
+	X=np.loadtxt(os.path.join(outputDir,'adjMatrix.txt'))
+	D=np.loadtxt(os.path.join(outputDir,'dic.txt'))
+	alpha=generateCode(X,D)
+
+	print 'saving codings...'
+	codeFile=os.path.join(outputDir,'code.txt')
+	np.savetxt(codeFile,alpha.toarray())	
+
 if __name__=='__main__':
 
 	inputDir=sys.argv[1]
 	outputDir=sys.argv[2]
 
-	getDictionary(inputDir,outputDir)
+	#getDictionary(inputDir,outputDir)
+	getAlpha(outputDir)
 

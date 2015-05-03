@@ -37,7 +37,7 @@ def readOnePattern(file_path):
 			if len(line.strip())==0:
 				continue
 			t=line.split(']')
-			t=t[1:].split(',')
+			t=t[0][1:].split(',')
 			currNodes=Set()
 			for node in t:
 				currNodes.add(int(node))
@@ -60,7 +60,7 @@ def mergePatterns(patterns):
 			li=len(patterns[i])
 			lj=len(patterns[j])
 			lo=len(patterns[i]&patterns[j])
-			if float(lo)/min(li,lj)>=0.5:
+			if float(lo)/min(li,lj)>=0.8:
 				if li>lj:
 					signs[j]=1
 				else:
@@ -80,7 +80,7 @@ def comparePatterns(p1,p2):
 			lj=len(nodes_j)
 			lo=len(nodes_i&nodes_j)
 			ratio=float(lo)/min(li,lj)
-			if ratio>=0.5:
+			if ratio>=0.8:
 				recall+=1
 				total_ratio+=ratio
 				print list(nodes_i), list(nodes_j), ratio

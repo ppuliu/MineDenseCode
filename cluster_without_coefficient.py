@@ -7,8 +7,8 @@ import shutil
 import timeit
 
 NNODE=428
-NCLUSTER=500
-ITER=-7200
+NCLUSTER=50
+ITER=-1800
 
 def readOneGraph(file_name):
 	v=np.zeros(shape=(NNODE*NNODE,1))
@@ -23,9 +23,9 @@ def readOneGraph(file_name):
 def readFiles(inputDir):
 	files=os.listdir(inputDir)
 	nsamples=len(files)
-	res=readOneGraph(files[0])
+	res=readOneGraph(os.path.join(inputDir,files[0]))
 	for i in range(1,nsamples):
-		v=readOneGraph(files[i])
+		v=readOneGraph(os.path.join(inputDir,files[i]))
 		res=np.concatenate((res,v))
 
 	return res
@@ -131,7 +131,7 @@ def getDictionary(inputDir,outputDir):
 		
 	print 'saving raw input data...'
 	adjMatrixFile=os.path.join(outputDir,'adjMatrix.txt')
-	np.savetxt(clusCoeffFile,X)
+	np.savetxt(adjMatrixFile,X)
 
 	print 'doing sparse coding...'
 	start=timeit.default_timer()
@@ -148,5 +148,5 @@ if __name__=='__main__':
 	inputDir=sys.argv[1]
 	outputDir=sys.argv[2]
 
-	getClusters(inputDir,outputDir)
+	getDictionary(inputDir,outputDir)
 

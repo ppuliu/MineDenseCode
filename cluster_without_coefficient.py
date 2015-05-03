@@ -8,7 +8,7 @@ import timeit
 
 NNODE=428
 NCLUSTER=50
-ITER=-1800
+ITER=-600
 
 def readOneGraph(file_name):
 	v=np.zeros(shape=(NNODE*NNODE,1))
@@ -26,7 +26,7 @@ def readFiles(inputDir):
 	res=readOneGraph(os.path.join(inputDir,files[0]))
 	for i in range(1,nsamples):
 		v=readOneGraph(os.path.join(inputDir,files[i]))
-		res=np.concatenate((res,v))
+		res=np.concatenate((res,v),axis=1)
 
 	return res
 

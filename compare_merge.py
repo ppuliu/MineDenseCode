@@ -3,6 +3,7 @@ import os
 import subprocess
 from sets import Set
 
+COMPT=0.5
 
 def getPatternList(inDir):
 
@@ -80,7 +81,7 @@ def comparePatterns(p1,p2):
 			lj=len(nodes_j)
 			lo=len(nodes_i&nodes_j)
 			ratio=float(lo)/min(li,lj)
-			if ratio>=0.8:
+			if ratio>=COMPT:
 				recall+=1
 				total_ratio+=ratio
 				print list(nodes_i), list(nodes_j), ratio

@@ -68,17 +68,33 @@ def groupNets(alpha):
 		res.append(t)
 	return res
 
+def generateCode(X,D):
+    X = np.asfortranarray(X)
+    print X.shape
+    D = np.asfortranarray(D)
+    print D.shape
+    param = { 'K' : NCLUSTER,	# size of the dictionary 
+          'lambda1' : 0.15, 
+          #'posD' : True,	# dictionary positive constrain
+          #'modeD' : 1,	# L1 regulization regularization on D
+          'iter' : ITER} # runtime limit 15mins
+
+    lparam = _extract_lasso_param(param)
+    print 'genrating codes...'
+    alpha = spams.lasso(X,D = D,**lparam)
+    return alpha
+
 def getClusters(inputDir,outputDir):
 	
-	# if os.path.isdir(outputDir):
-	# 	shutil.rmtree(outputDir)
-	# print "creating "+outputDir
-	# os.makedirs(outputDir)
+	if os.path.isdir(outputDir):
+		shutil.rmtree(outputDir)
+	print "creating "+outputDir
+	os.makedirs(outputDir)
 
-	# files=os.listdir(inputDir)
-	# codeIndexFile=os.path.join(outputDir,'codeIndex.txt')
-	# with open(codeIndexFile,'w') as f:
-	# 	f.write(' '.join(files))
+	files=os.listdir(inputDir)
+	codeIndexFile=os.path.join(outputDir,'codeIndex.txt')
+	with open(codeIndexFile,'w') as f:
+		f.write(' '.join(files))
 
 	print 'calculating clustering coefficients...'
 	start=timeit.default_timer()
@@ -104,15 +120,22 @@ def getClusters(inputDir,outputDir):
 	# codeFile=os.path.join(outputDir,'code.txt')
 	# np.savetxt(codeFile,alpha.toarray())
 
+
+	D=np.loadtxt(os.path.join(outputDir,'dic.txt'))
+	alpha=generateCode(X,D)
+	print 'saving codings...'
+	codeFile=os.path.join(outputDir,'code.txt')
+	np.savetxt(codeFile,alpha.toarray())
+
 	# # codeFile=os.path.join(outputDir,'code.txt')
 	# # alpha=np.loadtxt(codeFile)
-	# print 'grouping networks...'
-	# groups=groupNets(alpha)
-	# clusterFile=os.path.join(outputDir,'clusters.txt')
-	# with open(clusterFile,'w') as f:
-	# 	for nets in groups:
-	# 		 f.write(' '.join(map(str,nets)))
-	# 		 f.write('\n')
+	print 'grouping networks...'
+	groups=groupNets(alpha)
+	clusterFile=os.path.join(outputDir,'clusters.txt')
+	with open(clusterFile,'w') as f:
+		for nets in groups:
+			 f.write(' '.join(map(str,nets)))
+			 f.write('\n')
 
 if __name__=='__main__':
 

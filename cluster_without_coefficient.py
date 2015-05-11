@@ -45,10 +45,10 @@ def sparseCoding(X):
     return D
 
 def generateCode(X,D):
-	X = np.asfortranarray(X)
-	print X.shape
-	D = np.asfortranarray(D)
-	print D.shape
+    X = np.asfortranarray(X)
+    print X.shape
+    D = np.asfortranarray(D)
+    print D.shape
     param = { 'K' : NCLUSTER,	# size of the dictionary 
           'lambda1' : 0.15, 
           #'posD' : True,	# dictionary positive constrain

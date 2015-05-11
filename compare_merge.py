@@ -85,6 +85,7 @@ def comparePatterns(p1,p2):
 				recall+=1
 				total_ratio+=ratio
 				print list(nodes_i), list(nodes_j), ratio
+				break
 	print 'total number of patterns recalled: {0}'.format(recall)
 	print 'average overlap ratio: {0}'.format(total_ratio/recall)
 

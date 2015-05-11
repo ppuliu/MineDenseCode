@@ -105,13 +105,13 @@ def readOnePatternNew(file_path):
 					hashCode=str(minNode)+'_'+str(maxNode)
 					if hashCode not in res:
 						res[hashCode]=1
-					else
+					else:
 						res[hashCode]+=1
 	return res
 
 
 def comparePatternsNew(p1,p2):
-
+	#print p1,p2
 	precision=0
 	recall=0
 

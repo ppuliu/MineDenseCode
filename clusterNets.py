@@ -74,7 +74,7 @@ def generateCode(X,D):
     D = np.asfortranarray(D)
     print D.shape
     param = { 'K' : NCLUSTER,	# size of the dictionary 
-          'lambda1' : 0.15, 
+          'lambda1' : 0.05, 
           #'posD' : True,	# dictionary positive constrain
           #'modeD' : 1,	# L1 regulization regularization on D
           'iter' : ITER} # runtime limit 15mins
@@ -86,10 +86,10 @@ def generateCode(X,D):
 
 def getClusters(inputDir,outputDir):
 	
-	if os.path.isdir(outputDir):
-		shutil.rmtree(outputDir)
-	print "creating "+outputDir
-	os.makedirs(outputDir)
+	#if os.path.isdir(outputDir):
+	#	shutil.rmtree(outputDir)
+	#print "creating "+outputDir
+	#os.makedirs(outputDir)
 
 	files=os.listdir(inputDir)
 	codeIndexFile=os.path.join(outputDir,'codeIndex.txt')
